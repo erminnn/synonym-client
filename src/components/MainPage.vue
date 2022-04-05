@@ -48,7 +48,8 @@ export default {
             }
         },
         addWord(data) {
-            if (!this.word) {
+            const isAllWordsListActive = !this.word;
+            if (!isAllWordsListActive) {
                 this.synonyms.push(...data);
             }
         },
