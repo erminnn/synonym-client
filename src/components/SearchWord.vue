@@ -9,7 +9,7 @@
 <script>
 import WordService from '@/services/WordService';
 import useValidate from '@vuelidate/core';
-import { required, minLength } from '@vuelidate/validators';
+import { required } from '@vuelidate/validators';
 export default {
     emits: ['searchWord'],
     data() {
@@ -23,7 +23,6 @@ export default {
         return {
             word: {
                 required,
-                minLength: minLength(3),
             },
         };
     },
@@ -41,6 +40,9 @@ export default {
                     .catch(() => {
                         this.isSearchButtonDisabled = false;
                     });
+            } else {
+                this.isSearchButtonDisabled = false;
+                this.v$.$reset();
             }
         },
         resetInput() {
