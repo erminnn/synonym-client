@@ -1,15 +1,54 @@
 <template>
-  <div class="p-d-flex p-jc-center p-ai-center">
-    <InputText type="text" v-model="word" class="p-col-6 p-mt-3" />
-  </div>
+    <Toast />
+    <WordModal ref="wordModal" />
+    <div class="p-d-flex p-jc-center p-ai-center p-flex-column">
+        <div class="p-col-6">
+            <SearchWord @searchWord="searchWord" />
+            <div class="p-mt-5">
+                <div class="p-d-flex p-col-12 p-m-0 p-p-0">
+                    <div class="p-ml-auto">
+                        <Button label="Add new word" class="p-button-outlined p-button-help" @click="openAddWordModal" />
+                    </div>
+                </div>
+                <WordSynonyms :synonyms="synonyms" :word="word" />
+            </div>
+        </div>
+    </div>
 </template>
 
 <script>
+import WordModal from '@/components/WordModal.vue';
+import WordService from '@/services/WordService';
+import WordSynonyms from '@/components/WordSynonyms.vue';
+import SearchWord from '@/components/SearchWord.vue';
 export default {
-  data() {
-    return {
-      word: "",
-    };
-  },
+    components: { WordModal, WordSynonyms, SearchWord },
+    data() {
+        return {
+            word: '',
+            synonyms: [],
+        };
+    },
+    methods: {
+        initializeWords() {
+            WordService.getWords().then(({ data }) => {
+                this.synonyms = data.data;
+            });
+        },
+        searchWord(data) {
+            console.log('Data aaa', data);
+            const { word, synonyms } = data;
+            this.word = word;
+            this.synonyms = synonyms;
+        },
+        openAddWordModal() {
+            if (this.$refs.wordModal) {
+                this.$refs.wordModal.openModal();
+            }
+        },
+    },
+    created() {
+        //  this.initializeWords();
+    },
 };
 </script>
