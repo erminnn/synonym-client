@@ -8,6 +8,9 @@ const WordService = {
     getWords() {
         return axios.get(WORD_BASE_PATH);
     },
+    searchWord(word) {
+        return axios.get(`${WORD_BASE_PATH}/search?word=${word}`);
+    },
 };
 
 export default WordService;
