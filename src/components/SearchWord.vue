@@ -1,0 +1,38 @@
+<template>
+    <div class="p-col-12 p-mt-3 p-pl-0 p-pr-0">
+        <div class="p-inputgroup">
+            <InputText type="text" v-model="word" placeholder="Keyword" class="p-col-12" />
+            <Button icon="pi pi-search" class="p-button-warning" @click="searchWord()" />
+        </div>
+    </div>
+</template>
+<script>
+import WordService from '@/services/WordService';
+export default {
+    emits: ['searchWord'],
+    data() {
+        return {
+            word: '',
+        };
+    },
+    methods: {
+        searchWord() {
+            WordService.searchWord(this.word).then(({ data }) => {
+                const { data: result } = data;
+                this.emitDataFromSearchWord(result);
+                this.resetInput();
+            });
+        },
+        resetInput() {
+            this.word = '';
+        },
+        emitDataFromSearchWord(data) {
+            const wordWithSynonyms = {
+                word: this.word.toUpperCase(),
+                synonyms: !data ? [] : data.synonyms.synonyms.filter((synonym) => synonym !== data.name),
+            };
+            this.$emit('searchWord', wordWithSynonyms);
+        },
+    },
+};
+</script>
