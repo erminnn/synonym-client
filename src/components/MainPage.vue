@@ -36,7 +36,6 @@ export default {
             });
         },
         searchWord(data) {
-            console.log('Data aaa', data);
             const { word, synonyms } = data;
             this.word = word;
             this.synonyms = synonyms;
