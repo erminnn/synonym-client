@@ -24,15 +24,10 @@ export default {
     Header,
     Footer,
   },
-  data() {
-    return {
-      value: "ermin",
-    };
-  },
 };
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
