@@ -8,20 +8,33 @@
 </template>
 <script>
 import WordService from '@/services/WordService';
+import useValidate from '@vuelidate/core';
+import { required, minLength } from '@vuelidate/validators';
 export default {
     emits: ['searchWord'],
     data() {
         return {
+            v$: useValidate(),
             word: '',
+        };
+    },
+    validations() {
+        return {
+            word: {
+                required,
+                minLength: minLength(3),
+            },
         };
     },
     methods: {
         searchWord() {
-            WordService.searchWord(this.word).then(({ data }) => {
-                const { data: result } = data;
-                this.emitDataFromSearchWord(result);
-                this.resetInput();
-            });
+            if (this.validateInput()) {
+                WordService.searchWord(this.word).then(({ data }) => {
+                    const { data: result } = data;
+                    this.emitDataFromSearchWord(result);
+                    this.resetInput();
+                });
+            }
         },
         resetInput() {
             this.word = '';
@@ -32,6 +45,10 @@ export default {
                 synonyms: !data ? [] : data.synonyms.synonyms.filter((synonym) => synonym !== data.name),
             };
             this.$emit('searchWord', wordWithSynonyms);
+        },
+        validateInput() {
+            this.v$.$validate();
+            return !this.v$.word.$error;
         },
     },
 };
