@@ -1,13 +1,14 @@
 <template>
     <Card class="p-col-12 p-mt-3">
-        <template #title>{{ word }}</template>
+        <template #title>{{ word ? word : 'All words' }}</template>
         <template #content>
-            <h3>Word synonyms</h3>
-            <div class="p-d-flex p-flex-wrap">
+            <h3 v-if="word">Word synonyms</h3>
+            <div v-if="synonyms.length" class="p-d-flex p-flex-wrap">
                 <div class="demo-container p-p-2" v-for="synonym in synonyms" :key="synonym">
                     <Chip :label="synonym" class="custom-chip" />
                 </div>
             </div>
+            <h4 v-else>{{ word ? 'Sorry, there is no synonyms' : 'There is no words in database' }}</h4>
         </template>
     </Card>
 </template>

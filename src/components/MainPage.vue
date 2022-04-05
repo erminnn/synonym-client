@@ -6,6 +6,7 @@
             <SearchWord @searchWord="searchWord" />
             <div class="p-mt-5">
                 <div class="p-d-flex p-col-12 p-m-0 p-p-0">
+                    <Button label="All words" class="p-button-outlined p-button-help" @click="initializeWords()" />
                     <div class="p-ml-auto">
                         <Button label="Add new word" class="p-button-outlined p-button-help" @click="openAddWordModal" />
                     </div>
@@ -32,7 +33,8 @@ export default {
     methods: {
         initializeWords() {
             WordService.getWords().then(({ data }) => {
-                this.synonyms = data.data;
+                this.word = '';
+                this.synonyms = data.data.map((word) => word.name);
             });
         },
         searchWord(data) {
@@ -47,7 +49,7 @@ export default {
         },
     },
     created() {
-        //  this.initializeWords();
+        this.initializeWords();
     },
 };
 </script>
