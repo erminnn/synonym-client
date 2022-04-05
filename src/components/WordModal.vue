@@ -39,6 +39,7 @@ import WordService from '@/services/WordService';
 import useValidate from '@vuelidate/core';
 import { required, minLength } from '@vuelidate/validators';
 export default {
+    emits: ['addWord'],
     data() {
         return {
             v$: useValidate(),
@@ -67,7 +68,9 @@ export default {
             if (this.validateInputs()) {
                 this.isSaveButtonDisabled = true;
                 WordService.addWord({ word: this.word, synonyms: this.synonyms })
-                    .then(() => {
+                    .then(({ data }) => {
+                        const words = data.data.map((word) => word.name);
+                        this.emitNewWords(words);
                         this.$toast.add({ severity: 'success', summary: 'Successfuly added word with synonyms', life: 3000 });
                         this.closeModal();
                         this.isSaveButtonDisabled = false;
@@ -93,6 +96,9 @@ export default {
             this.word = '';
             this.synonyms = [];
             this.v$.$reset();
+        },
+        emitNewWords(data) {
+            this.$emit('addWord', data);
         },
     },
 };

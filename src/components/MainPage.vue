@@ -1,6 +1,6 @@
 <template>
     <Toast />
-    <WordModal ref="wordModal" />
+    <WordModal ref="wordModal" @addWord="addWord" />
     <div class="p-d-flex p-jc-center p-ai-center p-flex-column">
         <div class="p-col-6">
             <SearchWord @searchWord="searchWord" />
@@ -45,6 +45,11 @@ export default {
         openAddWordModal() {
             if (this.$refs.wordModal) {
                 this.$refs.wordModal.openModal();
+            }
+        },
+        addWord(data) {
+            if (!this.word) {
+                this.synonyms.push(...data);
             }
         },
     },
