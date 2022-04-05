@@ -3,7 +3,9 @@
         <template #header>
             <h3 class="p-m-1">Add word with synonyms</h3>
         </template>
-        <div class="p-fluid p-grid">
+        <Message severity="info" :closable="false">After entering synonym press enter or comma (,) to add synonym.</Message>
+
+        <div class="p-fluid p-grid p-mt-1">
             <div class="input-form p-col-12 p-mt-4">
                 <div class="p-float-label">
                     <InputText id="word" type="text" v-model.trim="word" class="text-box" />
