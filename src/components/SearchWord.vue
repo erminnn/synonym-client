@@ -1,7 +1,7 @@
 <template>
     <div class="p-col-12 p-mt-3 p-pl-0 p-pr-0">
         <div class="p-inputgroup">
-            <InputText type="text" v-model="word" placeholder="Keyword" class="p-col-12" />
+            <InputText type="text" v-model="word" placeholder="Search for word" class="p-col-12" @keyup.enter="searchWord" />
             <Button icon="pi pi-search" class="p-button-warning" @click="searchWord()" :disabled="isSearchButtonDisabled" />
         </div>
     </div>
