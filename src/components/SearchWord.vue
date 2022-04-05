@@ -2,7 +2,7 @@
     <div class="p-col-12 p-mt-3 p-pl-0 p-pr-0">
         <div class="p-inputgroup">
             <InputText type="text" v-model="word" placeholder="Keyword" class="p-col-12" />
-            <Button icon="pi pi-search" class="p-button-warning" @click="searchWord()" />
+            <Button icon="pi pi-search" class="p-button-warning" @click="searchWord()" :disabled="isSearchButtonDisabled" />
         </div>
     </div>
 </template>
@@ -16,6 +16,7 @@ export default {
         return {
             v$: useValidate(),
             word: '',
+            isSearchButtonDisabled: false,
         };
     },
     validations() {
@@ -29,11 +30,17 @@ export default {
     methods: {
         searchWord() {
             if (this.validateInput()) {
-                WordService.searchWord(this.word).then(({ data }) => {
-                    const { data: result } = data;
-                    this.emitDataFromSearchWord(result);
-                    this.resetInput();
-                });
+                this.isSearchButtonDisabled = true;
+                WordService.searchWord(this.word)
+                    .then(({ data }) => {
+                        const { data: result } = data;
+                        this.emitDataFromSearchWord(result);
+                        this.resetInput();
+                        this.isSearchButtonDisabled = false;
+                    })
+                    .catch(() => {
+                        this.isSearchButtonDisabled = false;
+                    });
             }
         },
         resetInput() {
