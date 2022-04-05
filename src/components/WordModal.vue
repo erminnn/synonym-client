@@ -26,7 +26,7 @@
         <template #footer>
             <div class="p-d-flex">
                 <div class="p-ml-auto">
-                    <Button id="btn-close" label="Close" icon="pi pi-times" @click="close()" class="p-button-outlined p-button-danger p-mr-2" />
+                    <Button id="btn-close" label="Close" icon="pi pi-times" @click="closeModal()" class="p-button-outlined p-button-danger p-mr-2" />
                     <Button id="btn-save" class="p-button-outlined p-button-success" label="Save" @click="save()" icon="pi pi-check" :disabled="isSaveButtonDisabled" />
                 </div>
             </div>
@@ -69,18 +69,21 @@ export default {
                 WordService.addWord({ word: this.word, synonyms: this.synonyms })
                     .then(() => {
                         this.$toast.add({ severity: 'success', summary: 'Successfuly added word with synonyms', life: 3000 });
-                        this.modalDisplay = false;
-                        this.resetInputs();
+                        this.closeModal();
                         this.isSaveButtonDisabled = false;
                     })
                     .catch(() => {
                         this.$toast.add({ severity: 'error', summary: 'An error occured while adding word with synonyms', life: 3000 });
                         this.isSaveButtonDisabled = false;
                     });
+            } else {
+                this.isSaveButtonDisabled = false;
             }
         },
-        close() {
+        closeModal() {
+            this.v$.$reset();
             this.modalDisplay = false;
+            this.resetInputs();
         },
         validateInputs() {
             this.v$.$validate();
@@ -89,6 +92,7 @@ export default {
         resetInputs() {
             this.word = '';
             this.synonyms = [];
+            this.v$.$reset();
         },
     },
 };
