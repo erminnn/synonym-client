@@ -1,14 +1,13 @@
 <template>
-    <Toast />
     <WordModal ref="wordModal" @addWord="addWord" />
     <div class="p-d-flex p-jc-center p-ai-center p-flex-column">
         <div class="p-col-6">
             <SearchWord @searchWord="searchWord" />
             <div class="p-mt-5">
                 <div class="p-d-flex p-col-12 p-m-0 p-p-0">
-                    <Button label="All words" class="p-button-outlined p-button-help" @click="initializeWords()" />
+                    <Button id="allWordsBtn" label="All words" class="p-button-outlined p-button-help" @click="initializeWords()" />
                     <div class="p-ml-auto">
-                        <Button label="Add new word" class="p-button-outlined p-button-help" @click="openAddWordModal" />
+                        <Button id="addWordBtn" label="Add new word" class="p-button-outlined p-button-help" @click="openAddWordModal" />
                     </div>
                 </div>
                 <WordSynonyms :synonyms="synonyms" :word="word" />
@@ -54,7 +53,7 @@ export default {
             }
         },
     },
-    created() {
+    mounted() {
         this.initializeWords();
     },
 };
