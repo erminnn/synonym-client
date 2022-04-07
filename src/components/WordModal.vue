@@ -1,5 +1,5 @@
 <template>
-    <Dialog :visible="modalDisplay" :modal="true" :closable="false" class="p-col-6">
+    <Dialog :visible="modalDisplay" :modal="true" :closable="false" class="p-col-12 p-sm-6 p-md-6 p-lg-6">
         <template #header>
             <h3 class="p-m-1">Add word with synonyms</h3>
         </template>

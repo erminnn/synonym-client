@@ -23,7 +23,7 @@ WordService.searchWord = jest.fn(() =>
         data: 'ermin',
     })
 );
-describe('WordSynonyms.vue', () => {
+describe('SearchWord.vue', () => {
     // afterEach(() => {
     //     WordService.searchWord.mockReset();
     // });
