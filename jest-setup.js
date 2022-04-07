@@ -63,4 +63,6 @@ import Chip from 'primevue/chip';
 config.global.components = {
     Card: Card,
     Chip: Chip,
+    Button: Button,
+    InputText: InputText,
 };
