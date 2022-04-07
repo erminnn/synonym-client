@@ -40,10 +40,12 @@
 import WordService from '@/services/WordService';
 import useValidate from '@vuelidate/core';
 import { required, minLength } from '@vuelidate/validators';
+import { useToast } from 'vue-toastification';
 export default {
     emits: ['addWord'],
     data() {
         return {
+            toast: useToast(),
             v$: useValidate(),
             modalDisplay: false,
             word: null,
@@ -73,12 +75,18 @@ export default {
                     .then(({ data }) => {
                         const words = data.data.map((word) => word.name);
                         this.emitNewWords(words);
-                        this.$toast.add({ severity: 'success', summary: 'Successfuly added word with synonyms', life: 3000 });
+                        this.toast.success('Word added successfully', {
+                            position: 'top-right',
+                            timeout: 3000,
+                        });
                         this.closeModal();
                         this.isSaveButtonDisabled = false;
                     })
                     .catch(() => {
-                        this.$toast.add({ severity: 'error', summary: 'An error occured while adding word with synonyms', life: 3000 });
+                        this.toast.error('An error occured while adding word', {
+                            position: 'top-right',
+                            timeout: 3000,
+                        });
                         this.isSaveButtonDisabled = false;
                     });
             } else {
