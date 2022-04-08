@@ -8,7 +8,7 @@
                     <Chip :label="synonym" class="custom-chip" />
                 </div>
             </div>
-            <h4 id="synonymsInfoMessage" v-else>{{ word ? 'Sorry, there is no synonyms' : 'There is no words in database' }}</h4>
+            <h4 id="synonymsInfoMessage" v-else>{{ word ? 'Sorry, there are no synonyms' : 'There are no words in database' }}</h4>
         </template>
     </Card>
 </template>
