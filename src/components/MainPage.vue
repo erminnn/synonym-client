@@ -1,5 +1,5 @@
 <template>
-    <WordModal ref="wordModal" @addWord="addWord" />
+    <WordModal ref="wordModal" @onWordAdded="onWordAdded" />
     <div class="p-d-flex p-jc-center p-ai-center p-flex-column">
         <div class="p-col-6">
             <SearchWord @searchWord="searchWord" />
@@ -46,11 +46,8 @@ export default {
                 this.$refs.wordModal.openModal();
             }
         },
-        addWord(data) {
-            const isAllWordsListActive = !this.word;
-            if (!isAllWordsListActive) {
-                this.synonyms.push(...data);
-            }
+        onWordAdded() {
+            this.initializeWords();
         },
     },
     mounted() {

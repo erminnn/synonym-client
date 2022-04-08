@@ -42,7 +42,7 @@ import useValidate from '@vuelidate/core';
 import { required, minLength } from '@vuelidate/validators';
 import { useToast } from 'vue-toastification';
 export default {
-    emits: ['addWord'],
+    emits: ['onWordAdded'],
     data() {
         return {
             toast: useToast(),
@@ -72,9 +72,8 @@ export default {
             if (this.validateInputs()) {
                 this.isSaveButtonDisabled = true;
                 WordService.addWord({ word: this.word, synonyms: this.synonyms })
-                    .then(({ data }) => {
-                        const words = data.data.map((word) => word.name);
-                        this.emitNewWords(words);
+                    .then(() => {
+                        this.$emit('onWordAdded');
                         this.toast.success('Word added successfully', {
                             position: 'top-right',
                             timeout: 3000,
@@ -83,6 +82,7 @@ export default {
                         this.isSaveButtonDisabled = false;
                     })
                     .catch(() => {
+                        this.closeModal();
                         this.toast.error('An error occured while adding word', {
                             position: 'top-right',
                             timeout: 3000,
@@ -106,9 +106,6 @@ export default {
             this.word = '';
             this.synonyms = [];
             this.v$.$reset();
-        },
-        emitNewWords(data) {
-            this.$emit('addWord', data);
         },
     },
 };
